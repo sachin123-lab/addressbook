@@ -1,11 +1,11 @@
-# Use an official OpenJDK image as the base image
-FROM openjdk:17-jdk-slim
+# Use a Tomcat base image
+FROM tomcat:10.1-jdk17
 
-# Set the working directory inside the container
-WORKDIR /app
+# Copy the WAR file into the Tomcat webapps directory
+COPY /var/lib/jenkins/workspace/docker-pipline/target/addressbook-2.0.war /usr/local/tomcat/webapps/
 
-# Copy the Java application jar file to the container
-COPY /var/lib/jenkins/workspace/docker-pipline/target/addressbook-2.0.war /app/addressbook-2.0.war
+# Expose the new port
+EXPOSE 8181
 
-# Command to run the Java application
-CMD ["java", "-jar", "addressbook-2.0.war"]
+# Update the Tomcat server configuration to use port 9000
+RUN sed -i 's/port="8080"/port="8181"/g' /usr/local/tomcat/conf/server.xml
