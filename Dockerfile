@@ -2,7 +2,7 @@
 FROM tomcat:10.1-jdk17
 
 # Copy the WAR file into the Tomcat webapps directory
-COPY /var/lib/jenkins/workspace/docker-pipline/target/addressbook-2.0.war /usr/local/tomcat/webapps/
+COPY /home/ubuntu/jenkins-dir/addressbook-2.0.war /usr/local/tomcat/webapps/
 
 # Expose the new port
 EXPOSE 8181
