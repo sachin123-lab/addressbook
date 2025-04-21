@@ -1,11 +1,15 @@
-# Use a Tomcat base image
-FROM tomcat:10.1-jdk17
+# Use a base image with Tomcat
+FROM tomcat:9.0
+
+# Set the working directory inside the container
+WORKDIR /usr/local/tomcat/webapps/
 
 # Copy the WAR file into the Tomcat webapps directory
-COPY /home/ubuntu/jenkins-dir/addressbook-2.0.war /usr/local/tomcat/webapps/
+COPY target/addressbook-2.0.war /usr/local/tomcat/webapps/
 
-# Expose the new port
+# Expose the default Tomcat port
 EXPOSE 8181
 
-# Update the Tomcat server configuration to use port 9000
-RUN sed -i 's/port="8080"/port="8181"/g' /usr/local/tomcat/conf/server.xml
+# Start Tomcat
+CMD ["catalina.sh", "run"]
+
